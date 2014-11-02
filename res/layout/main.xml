@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<com.example.downhell_100.AgileBuddyView
+	    android:id="@+id/agile_buddy"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_gravity="left" />
+	<Button
+	    android:id="@+id/left"
+	    android:layout_width="80dp"
+	    android:layout_height="60dp"
+	    android:layout_gravity="bottom|left"
+	    android:background="#e0000000"
+	    android:text="&lt;&lt;"
+	    android:textSize="30sp" />
+
+	<Button
+	    android:id="@+id/right"
+	    android:layout_width="80dp"
+	    android:layout_height="60dp"
+	    android:layout_gravity="bottom|right"
+	    android:background="#e0000000"
+	    android:text=">>"
+	    android:textSize="30sp" />
+
+</FrameLayout>
