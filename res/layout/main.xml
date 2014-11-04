@@ -13,7 +13,7 @@
 	    android:layout_width="80dp"
 	    android:layout_height="60dp"
 	    android:layout_gravity="bottom|left"
-	    android:background="#e0000000"
+	    android:background="#80000000"
 	    android:text="&lt;&lt;"
 	    android:textSize="30sp" />
 
@@ -22,7 +22,7 @@
 	    android:layout_width="80dp"
 	    android:layout_height="60dp"
 	    android:layout_gravity="bottom|right"
-	    android:background="#e0000000"
+	    android:background="#80000000"
 	    android:text=">>"
 	    android:textSize="30sp" />
 

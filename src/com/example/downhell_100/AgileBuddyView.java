@@ -42,6 +42,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import graphic.*;
+import android.graphics.Matrix;
 
 /**
 * 
@@ -72,6 +74,15 @@ public class AgileBuddyView extends SurfaceView implements
 
 	private Bitmap mBackgroundImage;
 
+	private Bitmap mRole;	
+	private ImageSplitter mRoleSplitter;
+	private List <ImagePiece> mRolePiece;
+	
+	private Bitmap mFootboard;	
+	private ImageSplitter mFootboardSplitter;
+	private List <ImagePiece> mFootboardPieces;
+	
+	
 	private Bitmap mRoleStandImage;
 	private Bitmap mRoleDeadmanImage;
 	private Bitmap mRoleFreefallImage1;
@@ -145,56 +156,7 @@ public class AgileBuddyView extends SurfaceView implements
 					}
 				}
 				dialog.show();
-//				dialogView.findViewById(R.id.retry).setOnClickListener(
-//						new OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//								dialog.dismiss();
-//								restartGame();
-//							}
-//						});
 
-//				dialogView.findViewById(R.id.post_scores).setOnClickListener(
-//						new OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//								String userName = null;
-//								if (usernameEditText.getText() != null) {
-//									userName = usernameEditText.getText()
-//											.toString().replace("\n", " ")
-//											.trim();
-//								}
-//								if (userName.length() > 0
-//										&& userName.length() < 20) {
-//									SharedPreferences settings = mContext
-//											.getSharedPreferences(
-//													ConstantInfo.PREFERENCE_RANKING_INFO,
-//													0);
-//									settings
-//											.edit()
-//											.putString(
-//													ConstantInfo.PREFERENCE_KEY_RANKING_NAME,
-//													userName)
-//											.putBoolean(
-//													ConstantInfo.PREFERENCE_KEY_RANKING_FLAG,
-//													!settings
-//															.getBoolean(
-//																	ConstantInfo.PREFERENCE_KEY_RANKING_FLAG,
-//																	false))
-//											.commit();
-//								} else {
-//									showToast(R.string.options_toast_username_too_long);
-//								}
-//							}
-//						});
-//				dialogView.findViewById(R.id.goback).setOnClickListener(
-//						new OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//								dialog.dismiss();
-//								((AgileBuddyActivity) mContext).finish();
-//							}
-//						});
 			}
 		};
 		// 初始化资源
@@ -319,101 +281,53 @@ public class AgileBuddyView extends SurfaceView implements
 		mHpBarTotalImage = res.getDrawable(R.drawable.hp_bar_total);
 		mHpBarRemainImage = res.getDrawable(R.drawable.hp_bar_remain);
 
+		mRole = Bitmap.createScaledBitmap(BitmapFactory
+				.decodeResource(res, R.drawable.role1),
+				7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
+				UIModel.ROLE_ATTRIBUTE_HEITH,false);
+		mRoleSplitter = new ImageSplitter();
+		mRolePiece = mRoleSplitter.split(mRole, 7, 1);
+
+		for(int i = 3 ; i < 7 ; i++) {
+			Matrix matrix = new Matrix();
+			float matrixValues[] = { -1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 1f };
+			matrix.setValues(matrixValues);
+			matrix.postTranslate(mRolePiece.get(i).bitmap.getHeight() * 2 , 0);
+			Bitmap bitmap = Bitmap.createBitmap(mRolePiece.get(i).bitmap,0,0,mRolePiece.get(i).bitmap.getWidth(),
+				mRolePiece.get(i).bitmap.getHeight(),matrix,true);
+			ImagePiece imagePiece = new ImagePiece();
+			imagePiece.index = 4+i;
+			imagePiece.bitmap = bitmap;
+			mRolePiece.add(imagePiece);
+		}
+		
+		mFootboard = Bitmap.createScaledBitmap(BitmapFactory
+				.decodeResource(res, R.drawable.footboard),
+				7 * UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
+				5 * UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
+		mFootboardSplitter = new ImageSplitter();
+		mFootboardPieces = mFootboardSplitter.split(mFootboard, 7, 2);
+		
+		for(int i = 5; i < 9; i++) {
+			Matrix matrix = new Matrix();
+			float matrixValues[] = { -1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 1f };
+			matrix.setValues(matrixValues);
+			matrix.postTranslate(mFootboardPieces.get(i).bitmap.getHeight() * 2 , 0);
+			Bitmap bitmap = Bitmap.createBitmap(mFootboardPieces.get(i).bitmap,0,0,mFootboardPieces.get(i).bitmap.getWidth(),
+				mFootboardPieces.get(i).bitmap.getHeight(),matrix,true);
+			ImagePiece imagePiece = new ImagePiece();
+			imagePiece.index = 9+i;
+			imagePiece.bitmap = bitmap;
+			mFootboardPieces.add(imagePiece);
+		}
+		
 		mRoleDeadmanImage = Bitmap.createScaledBitmap(BitmapFactory
 				.decodeResource(res, R.drawable.role_deadman),
 				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
 				true);
-		mRoleStandImage = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_standing),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleFreefallImage1 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_freefall1),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleFreefallImage2 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_freefall2),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleFreefallImage3 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_freefall3),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleFreefallImage4 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_freefall4),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleMovingLeftImage1 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_moving_left1),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleMovingLeftImage2 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_moving_left2),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleMovingLeftImage3 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_moving_left3),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleMovingLeftImage4 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_moving_left4),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleMovingRightImage1 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_moving_right1),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleMovingRightImage2 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_moving_right2),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleMovingRightImage3 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_moving_right3),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-		mRoleMovingRightImage4 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_moving_right4),
-				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
-				true);
-
-		mFootboardNormalImage = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard_normal),
-				UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
-				UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
-		mFootboardUnstableImage1 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard_unstable1),
-				UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
-				UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
-		mFootboardUnstableImage2 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard_unstable2),
-				UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
-				UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
-		mFootboardSpringImage = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard_spring),
-				UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
-				UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
-		mFootboardSpikedImage = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard_spiked),
-				UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
-				UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
-		mFootboardMovingLeftImage1 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard_moving_left1),
-				UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
-				UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
-		mFootboardMovingLeftImage2 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard_moving_left2),
-				UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
-				UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
-		mFootboardMovingRightImage1 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard_moving_right1),
-				UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
-				UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
-		mFootboardMovingRightImage2 = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard_moving_right2),
-				UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
-				UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
+		
 		mBackgroundImage = BitmapFactory
-				.decodeResource(res, R.drawable.bg_game1);
+				.decodeResource(res, R.drawable.bg_game);
 	}
 
 	// thread for updating UI
@@ -490,33 +404,33 @@ public class AgileBuddyView extends SurfaceView implements
 				switch (footboard.getType()) {
 				case UIModel.FOOTBOARD_TYPE_UNSTABLE:
 					if (!footboard.isMarked()) {
-						tempBitmap = mFootboardUnstableImage1;
+						tempBitmap = mFootboardPieces.get(9).bitmap;
 					} else {
-						tempBitmap = mFootboardUnstableImage2;
+						tempBitmap = mFootboardPieces.get(10).bitmap;
 					}
 					break;
 				case UIModel.FOOTBOARD_TYPE_SPRING:
-					tempBitmap = mFootboardSpringImage;
+					tempBitmap = mFootboardPieces.get(2).bitmap;
 					break;
 				case UIModel.FOOTBOARD_TYPE_SPIKED:
-					tempBitmap = mFootboardSpikedImage;
+					tempBitmap = mFootboardPieces.get(1).bitmap;
 					break;
 				case UIModel.FOOTBOARD_TYPE_MOVING_LEFT:
 					if (footboard.nextFrame() == 0) {
-						tempBitmap = mFootboardMovingLeftImage1;
+						tempBitmap = mFootboardPieces.get(14).bitmap;
 					} else {
-						tempBitmap = mFootboardMovingLeftImage2;
+						tempBitmap = mFootboardPieces.get(15).bitmap;
 					}
 					break;
 				case UIModel.FOOTBOARD_TYPE_MOVING_RIGHT:
 					if (footboard.nextFrame() == 0) {
-						tempBitmap = mFootboardMovingRightImage1;
+						tempBitmap = mFootboardPieces.get(7).bitmap;
 					} else {
-						tempBitmap = mFootboardMovingRightImage2;
+						tempBitmap = mFootboardPieces.get(8).bitmap;
 					}
 					break;
 				default:
-					tempBitmap = mFootboardNormalImage;
+					tempBitmap = mFootboardPieces.get(0).bitmap;
 				}
 				canvas.drawBitmap(tempBitmap, footboard.getMinX(), footboard
 						.getMinY(), null);
@@ -527,46 +441,37 @@ public class AgileBuddyView extends SurfaceView implements
 				canvas.drawBitmap(mRoleDeadmanImage, role.getMinX(), role
 						.getMinY(), null);
 			} else {
-				switch (role.getRoleShape()) {
-				case UIModel.ROLE_Shape_FREEFALL_NO1:
-					tempBitmap = mRoleFreefallImage1;
-					break;
-				case UIModel.ROLE_Shape_FREEFALL_NO2:
-					tempBitmap = mRoleFreefallImage2;
-					break;
-				case UIModel.ROLE_Shape_FREEFALL_NO3:
-					tempBitmap = mRoleFreefallImage3;
-					break;
-				case UIModel.ROLE_Shape_FREEFALL_NO4:
-					tempBitmap = mRoleFreefallImage4;
-					break;
-				case UIModel.ROLE_Shape_MOVE_LEFT_NO1:
-					tempBitmap = mRoleMovingLeftImage1;
-					break;
-				case UIModel.ROLE_Shape_MOVE_LEFT_NO2:
-					tempBitmap = mRoleMovingLeftImage2;
-					break;
-				case UIModel.ROLE_Shape_MOVE_LEFT_NO3:
-					tempBitmap = mRoleMovingLeftImage3;
-					break;
-				case UIModel.ROLE_Shape_MOVE_LEFT_NO4:
-					tempBitmap = mRoleMovingLeftImage4;
-					break;
-				case UIModel.ROLE_Shape_MOVE_RIGHT_NO1:
-					tempBitmap = mRoleMovingRightImage1;
-					break;
-				case UIModel.ROLE_Shape_MOVE_RIGHT_NO2:
-					tempBitmap = mRoleMovingRightImage2;
-					break;
-				case UIModel.ROLE_Shape_MOVE_RIGHT_NO3:
-					tempBitmap = mRoleMovingRightImage3;
-					break;
-				case UIModel.ROLE_Shape_MOVE_RIGHT_NO4:
-					tempBitmap = mRoleMovingRightImage4;
-					break;
-				default:
-					tempBitmap = mRoleStandImage;
-				}
+			switch (role.getRoleShape()) {
+			case UIModel.ROLE_Shape_FREEFALL:
+				tempBitmap = mRolePiece.get(1).bitmap;
+				break;
+			case UIModel.ROLE_Shape_MOVE_LEFT_NO1:
+				tempBitmap = mRolePiece.get(7).bitmap;
+				break;
+			case UIModel.ROLE_Shape_MOVE_LEFT_NO2:
+				tempBitmap = mRolePiece.get(8).bitmap;
+				break;
+			case UIModel.ROLE_Shape_MOVE_LEFT_NO3:
+				tempBitmap = mRolePiece.get(9).bitmap;
+				break;
+			case UIModel.ROLE_Shape_MOVE_LEFT_NO4:
+				tempBitmap = mRolePiece.get(10).bitmap;
+				break;
+			case UIModel.ROLE_Shape_MOVE_RIGHT_NO1:
+				tempBitmap = mRolePiece.get(3).bitmap;
+				break;
+			case UIModel.ROLE_Shape_MOVE_RIGHT_NO2:
+				tempBitmap = mRolePiece.get(4).bitmap;
+				break;
+			case UIModel.ROLE_Shape_MOVE_RIGHT_NO3:
+				tempBitmap = mRolePiece.get(5).bitmap;
+				break;
+			case UIModel.ROLE_Shape_MOVE_RIGHT_NO4:
+				tempBitmap = mRolePiece.get(6).bitmap;
+				break;
+			default:
+				tempBitmap = mRolePiece.get(0).bitmap;
+			}
 				canvas.drawBitmap(tempBitmap, role.getMinX(), role.getMinY(),
 						null);
 			}

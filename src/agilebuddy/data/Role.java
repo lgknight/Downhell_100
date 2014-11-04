@@ -85,15 +85,7 @@ public class Role {
 		if (mFrameCounter == mFrameDelay) {
 			mFrameCounter = 0;
 			if (mRoleStatus == UIModel.ROLE_STATUS_FREEFALL) {
-				if (mRoleShape == UIModel.ROLE_Shape_FREEFALL_NO1) {
-					mRoleShape = UIModel.ROLE_Shape_FREEFALL_NO2;
-				} else if (mRoleShape == UIModel.ROLE_Shape_FREEFALL_NO2) {
-					mRoleShape = UIModel.ROLE_Shape_FREEFALL_NO3;
-				} else if (mRoleShape == UIModel.ROLE_Shape_FREEFALL_NO3) {
-					mRoleShape = UIModel.ROLE_Shape_FREEFALL_NO4;
-				} else {
-					mRoleShape = UIModel.ROLE_Shape_FREEFALL_NO1;
-				}
+				mRoleShape = UIModel.ROLE_Shape_FREEFALL;
 			} else if (mRoleStatus == UIModel.ROLE_STATUS_FREEFALL_RIGHT
 					|| mRoleStatus == UIModel.ROLE_STATUS_ON_FOOTBOARD_RIGHT) {
 				if (mRoleShape == UIModel.ROLE_Shape_MOVE_RIGHT_NO1) {

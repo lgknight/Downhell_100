@@ -61,12 +61,7 @@ public class Splash extends Activity implements OnClickListener {
 		Intent i = null;
 		switch (v.getId()) {
 		case R.id.start_game:
-			if (mBaseSettings.getBoolean(ConstantInfo.PREFERENCE_KEY_SHOWTIPS,
-					true)) {
-				i = new Intent(this, TipsActivity.class);
-			} else {
-				i = new Intent(this, AgileBuddyActivity.class);
-			}
+			i = new Intent(this, AgileBuddyActivity.class);
 			break;
 		case R.id.exit:
 			finish();

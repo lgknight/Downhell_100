@@ -67,18 +67,15 @@ public class UIModel {
 
 	// 主角帧
 	public static final int ROLE_Shape_STANDING = 0;
-	public static final int ROLE_Shape_FREEFALL_NO1 = 1;
-	public static final int ROLE_Shape_FREEFALL_NO2 = 2;
-	public static final int ROLE_Shape_FREEFALL_NO3 = 3;
-	public static final int ROLE_Shape_FREEFALL_NO4 = 4;
-	public static final int ROLE_Shape_MOVE_LEFT_NO1 = 5;
-	public static final int ROLE_Shape_MOVE_LEFT_NO2 = 6;
-	public static final int ROLE_Shape_MOVE_LEFT_NO3 = 7;
-	public static final int ROLE_Shape_MOVE_LEFT_NO4 = 8;
-	public static final int ROLE_Shape_MOVE_RIGHT_NO1 = 9;
-	public static final int ROLE_Shape_MOVE_RIGHT_NO2 = 10;
-	public static final int ROLE_Shape_MOVE_RIGHT_NO3 = 11;
-	public static final int ROLE_Shape_MOVE_RIGHT_NO4 = 12;
+	public static final int ROLE_Shape_FREEFALL = 1;
+	public static final int ROLE_Shape_MOVE_LEFT_NO1 = 2;
+	public static final int ROLE_Shape_MOVE_LEFT_NO2 = 3;
+	public static final int ROLE_Shape_MOVE_LEFT_NO3 = 4;
+	public static final int ROLE_Shape_MOVE_LEFT_NO4 = 5;
+	public static final int ROLE_Shape_MOVE_RIGHT_NO1 = 6;
+	public static final int ROLE_Shape_MOVE_RIGHT_NO2 = 7;
+	public static final int ROLE_Shape_MOVE_RIGHT_NO3 = 8;
+	public static final int ROLE_Shape_MOVE_RIGHT_NO4 = 9;
 
 	/**
 	 * 道具属性常量
