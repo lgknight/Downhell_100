@@ -58,27 +58,5 @@ public class AgileBuddyActivity extends Activity {
 		mLeft.setOnTouchListener(buttonListener);
 		mRight.setOnTouchListener(buttonListener);
 	
-		
-//		View.OnClickListener buttonListener=new View.OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View arg) {
-//				// TODO Auto-generated method stub
-//				switch(arg.getId()){
-//					case R.id.left:
-//						mAgileBuddyView.handleMoving(-1);
-//						break;
-//					case R.id.right:
-//						mAgileBuddyView.handleMoving(1);
-//						break;
-//						default:
-//						mAgileBuddyView.handleMoving(0);
-//						break;
-//				}
-//				}
-//		};	
-//		mLeft.setOnClickListener(buttonListener);
-//		mRight.setOnClickListener(buttonListener);
-	  
-}
+		}
 }

@@ -83,30 +83,7 @@ public class AgileBuddyView extends SurfaceView implements
 	private List <ImagePiece> mFootboardPieces;
 	
 	
-	private Bitmap mRoleStandImage;
 	private Bitmap mRoleDeadmanImage;
-	private Bitmap mRoleFreefallImage1;
-	private Bitmap mRoleFreefallImage2;
-	private Bitmap mRoleFreefallImage3;
-	private Bitmap mRoleFreefallImage4;
-	private Bitmap mRoleMovingLeftImage1;
-	private Bitmap mRoleMovingLeftImage2;
-	private Bitmap mRoleMovingLeftImage3;
-	private Bitmap mRoleMovingLeftImage4;
-	private Bitmap mRoleMovingRightImage1;
-	private Bitmap mRoleMovingRightImage2;
-	private Bitmap mRoleMovingRightImage3;
-	private Bitmap mRoleMovingRightImage4;
-
-	private Bitmap mFootboardNormalImage;
-	private Bitmap mFootboardUnstableImage1;
-	private Bitmap mFootboardUnstableImage2;
-	private Bitmap mFootboardSpringImage;
-	private Bitmap mFootboardSpikedImage;
-	private Bitmap mFootboardMovingLeftImage1;
-	private Bitmap mFootboardMovingLeftImage2;
-	private Bitmap mFootboardMovingRightImage1;
-	private Bitmap mFootboardMovingRightImage2;
 
 	private Drawable mTopBarImage;
 	private Drawable mHpBarTotalImage;
