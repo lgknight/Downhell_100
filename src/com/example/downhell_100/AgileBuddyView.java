@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-//import agilebuddy.data.Food;
 import agilebuddy.data.Footboard;
 import agilebuddy.data.Role;
 import agilebuddy.data.ScreenAttribute;
@@ -299,12 +298,12 @@ public class AgileBuddyView extends SurfaceView implements
 		}
 		
 		mRoleDeadmanImage = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role_deadman),
+				.decodeResource(res, R.drawable.role_dead),
 				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
 				true);
 		
 		mBackgroundImage = BitmapFactory
-				.decodeResource(res, R.drawable.bg_game);
+				.decodeResource(res, R.drawable.bg0);
 	}
 
 	// thread for updating UI
@@ -395,12 +394,20 @@ public class AgileBuddyView extends SurfaceView implements
 				case UIModel.FOOTBOARD_TYPE_MOVING_LEFT:
 					if (footboard.nextFrame() == 0) {
 						tempBitmap = mFootboardPieces.get(14).bitmap;
-					} else {
+					} else if (footboard.nextFrame() == 1) {
 						tempBitmap = mFootboardPieces.get(15).bitmap;
-					}
+					} else if (footboard.nextFrame() == 2) {
+						tempBitmap = mFootboardPieces.get(16).bitmap;
+					} else {
+						tempBitmap = mFootboardPieces.get(17).bitmap;
+					} 
 					break;
 				case UIModel.FOOTBOARD_TYPE_MOVING_RIGHT:
 					if (footboard.nextFrame() == 0) {
+						tempBitmap = mFootboardPieces.get(5).bitmap;
+					} else if (footboard.nextFrame() == 1) {
+						tempBitmap = mFootboardPieces.get(6).bitmap;
+					} else if (footboard.nextFrame() == 2) {
 						tempBitmap = mFootboardPieces.get(7).bitmap;
 					} else {
 						tempBitmap = mFootboardPieces.get(8).bitmap;
@@ -410,13 +417,12 @@ public class AgileBuddyView extends SurfaceView implements
 					tempBitmap = mFootboardPieces.get(0).bitmap;
 				}
 				canvas.drawBitmap(tempBitmap, footboard.getMinX(), footboard
-						.getMinY(), null);
+						.getMinY() - 30, null);
 			}
 
 			Role role = mUIModel.getRoleUIObject();
 			if (mUIModel.mGameStatus == UIModel.GAME_STATUS_GAMEOVER) {
-				canvas.drawBitmap(mRoleDeadmanImage, role.getMinX(), role
-						.getMinY(), null);
+				canvas.drawBitmap(mRoleDeadmanImage, role.getMinX(), role.getMinY(), null);
 			} else {
 			switch (role.getRoleShape()) {
 			case UIModel.ROLE_Shape_FREEFALL:
@@ -465,8 +471,7 @@ public class AgileBuddyView extends SurfaceView implements
 					AgileBuddyView.this.mScreenAttribute.maxY - 15);
 			mHpBarTotalImage.draw(canvas);
 
-			mHpBarRemainImage
-					.setBounds(
+			mHpBarRemainImage.setBounds(
 							(AgileBuddyView.this.mScreenAttribute.maxX / 3),
 							AgileBuddyView.this.mScreenAttribute.maxY - 20,
 							(int) (AgileBuddyView.this.mScreenAttribute.maxX / 3 + AgileBuddyView.this.mScreenAttribute.maxX

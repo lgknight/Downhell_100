@@ -214,6 +214,8 @@ public class UIModel {
 		case 4:
 		case 5:
 			frameType = FOOTBOARD_TYPE_SPRING;
+//			frameAmount = 3;
+//			frameDelay = 15;
 			break;
 		case 6:
 		case 7:
@@ -223,13 +225,13 @@ public class UIModel {
 		case 9:
 		case 10:
 			frameType = FOOTBOARD_TYPE_MOVING_LEFT;
-			frameAmount = 2;
+			frameAmount = 4;
 			frameDelay = 15;
 			break;
 		case 11:
 		case 12:
 			frameType = FOOTBOARD_TYPE_MOVING_RIGHT;
-			frameAmount = 2;
+			frameAmount = 4;
 			frameDelay = 15;
 			break;
 		default:
@@ -311,16 +313,13 @@ public class UIModel {
 	private void handleRoleAction() {
 		Role role = mRole;
 		for (Footboard footboard : mFootboardList) {
-			if ((role.getMaxY() >= footboard.getMinY() && role.getMaxY() < footboard
-					.getMaxY())
-					&& (role.getMaxX() > footboard.getMinX() && role.getMinX() < footboard
-							.getMaxX())) {
+			if ((role.getMaxY() >= footboard.getMinY() && role.getMaxY() < footboard.getMaxY())
+					&& ((role.getMaxX() + role.getMinX()) / 2 > footboard.getMinX() && ((role.getMaxX() + role.getMinX()) / 2 < footboard.getMaxX()))) {
 				if (role.getRoleStatus() == ROLE_STATUS_ON_FOOTBOARD
 						|| role.getRoleStatus() == ROLE_STATUS_ON_FOOTBOARD_RIGHT
 						|| role.getRoleStatus() == ROLE_STATUS_ON_FOOTBOARD_LEFT) {
 					if (footboard.getType() == FOOTBOARD_TYPE_SPRING) {
-						mRoleVelocityY = mFootboartVelocity
-								- GAME_ATTRIBUTE_GRAVITY_VELOCITY;
+						mRoleVelocityY = 1 * (mFootboartVelocity - GAME_ATTRIBUTE_GRAVITY_VELOCITY);
 						role.addY(-1 * GAME_ATTRIBUTE_PIXEL_DENSITY_Y);
 						updateRoleStatus(ROLE_STATUS_FREEFALL);
 						return;

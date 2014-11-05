@@ -49,6 +49,8 @@ public class Footboard {
 	}
 
 	public int getMinY() {
+//		return mVirtualY / UIModel.GAME_ATTRIBUTE_PIXEL_DENSITY_Y - 5 * mHeith / 6;
+
 		return mVirtualY / UIModel.GAME_ATTRIBUTE_PIXEL_DENSITY_Y;
 	}
 

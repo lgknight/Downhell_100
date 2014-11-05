@@ -45,11 +45,11 @@ public class Splash extends Activity implements OnClickListener {
 		Button startButton = (Button) findViewById(R.id.start_game);
 		startButton.setOnClickListener(this);
 
-		Button scoreBoardButton = (Button) findViewById(R.id.score_board);
-		scoreBoardButton.setOnClickListener(this);
-
-		Button optionButton = (Button) findViewById(R.id.options);
-		optionButton.setOnClickListener(this);
+//		Button scoreBoardButton = (Button) findViewById(R.id.score_board);
+//		scoreBoardButton.setOnClickListener(this);
+//
+//		Button optionButton = (Button) findViewById(R.id.options);
+//		optionButton.setOnClickListener(this);
 
 		Button exitButton = (Button) findViewById(R.id.exit);
 		exitButton.setOnClickListener(this);

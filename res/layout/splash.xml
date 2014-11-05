@@ -4,13 +4,13 @@
 		      android:layout_width="fill_parent" 
 		      android:layout_height="fill_parent">
 <FrameLayout 
-	android:background="@drawable/bg_game" android:orientation="vertical"
+	android:background="@drawable/bg0" android:orientation="vertical"
 	android:layout_width="fill_parent" android:layout_height="wrap_content">
 	<LinearLayout android:orientation="vertical"
 		android:layout_height="wrap_content" android:layout_width="fill_parent"
 		android:layout_gravity="center">
 		<ImageView android:layout_width="fill_parent"
-			android:layout_height="150dip" android:scaleType="center" android:src="@drawable/game_logo" />
+			android:layout_height="150dip" android:scaleType="center" android:src="@drawable/title" />
 		<LinearLayout android:orientation="vertical"
 			android:layout_height="wrap_content" android:layout_width="fill_parent"
 			android:layout_gravity="center">
@@ -19,7 +19,7 @@
 				android:text="@string/start_game" android:textColor="#FF292066"
 				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
 				android:layout_marginBottom="3dip" />
-			<Button android:id="@+id/score_board" android:layout_width="220dip"
+<!-- 			<Button android:id="@+id/score_board" android:layout_width="220dip"
 				android:layout_height="wrap_content" android:layout_gravity="center"
 				android:text="@string/score_board" android:textColor="#FF292066"
 				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
@@ -29,7 +29,7 @@
 				android:text="@string/options" android:textColor="#FF292066"
 				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
 				android:layout_marginBottom="3dip" />
-<!-- 			<Button android:id="@+id/more_app" android:layout_width="220dip"
+			<Button android:id="@+id/more_app" android:layout_width="220dip"
 				android:layout_height="wrap_content" android:layout_gravity="center"
 				android:text="@string/more_app" android:textColor="#FF292066"
 				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
