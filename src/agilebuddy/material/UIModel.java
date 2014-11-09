@@ -214,8 +214,8 @@ public class UIModel {
 		case 4:
 		case 5:
 			frameType = FOOTBOARD_TYPE_SPRING;
-//			frameAmount = 3;
-//			frameDelay = 15;
+			frameAmount = 3;
+			frameDelay = 15;
 			break;
 		case 6:
 		case 7:
@@ -291,7 +291,7 @@ public class UIModel {
 			mEffectFlag = EFFECT_FLAG_SPIKED;
 			return;
 		}
-		if (mRole.getMinY() > mScreenAttribute.maxY) {
+		if ((mRole.getMinY() + mRole.getMaxY()) / 2 > mScreenAttribute.maxY) {
 			mGameStatus = GAME_STATUS_GAMEOVER;
 			return;
 		}
@@ -322,6 +322,7 @@ public class UIModel {
 						mRoleVelocityY = 1 * (mFootboartVelocity - GAME_ATTRIBUTE_GRAVITY_VELOCITY);
 						role.addY(-1 * GAME_ATTRIBUTE_PIXEL_DENSITY_Y);
 						updateRoleStatus(ROLE_STATUS_FREEFALL);
+						footboard.setOnRole(false);
 						return;
 					}
 					if (footboard.getType() == FOOTBOARD_TYPE_MOVING_LEFT) {
@@ -332,6 +333,7 @@ public class UIModel {
 							&& footboard.isBoardBreak()) {
 						mFootboardList.remove(footboard);
 					}
+					footboard.setOnRole(true);
 					updateRoleStatus(ROLE_STATUS_ON_FOOTBOARD);
 				} else {
 					// 主角第一次触板
@@ -367,6 +369,7 @@ public class UIModel {
 						mEffectFlag = EFFECT_FLAG_NORMAL;
 					}
 				}
+				footboard.setOnRole(true);
 				return;
 			}
 		}
@@ -417,9 +420,6 @@ public class UIModel {
 		return mFootboardList;
 	}
 
-//	public Food getFood() {
-//		return mCurFood;
-//	}
 
 	public int getEffectFlag() {
 		try {

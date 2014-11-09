@@ -1,9 +1,7 @@
 package com.example.downhell_100;
-//Download by http://www.codefans.net
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.HashMap;
-import java.util.List;
+import java.util.List; 
 
 import agilebuddy.data.Footboard;
 import agilebuddy.data.Role;
@@ -11,7 +9,7 @@ import agilebuddy.data.ScreenAttribute;
 import agilebuddy.material.UIModel;
 import agilebuddy.util.ConstantInfo;
 
-
+import android.R.string;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,14 +31,11 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
+import android.util.Log; 
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 import graphic.*;
 import android.graphics.Matrix;
 
@@ -94,6 +89,7 @@ public class AgileBuddyView extends SurfaceView implements
 	public AgileBuddyView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
+		
 		SurfaceHolder holder = getHolder();
 		holder.addCallback(this);
 		mHandler = new Handler() {
@@ -101,25 +97,15 @@ public class AgileBuddyView extends SurfaceView implements
 			public void handleMessage(Message m) {
 				// 更新本地记录文件
 				int curScore = m.getData().getInt(HANDLE_MESSAGE_GAME_SCORE);
-				boolean recordRefreshed = updateLocalRecord(curScore);
-
+//				boolean recordRefreshed = updateLocalRecord(curScore);
+//				Global.score = curScore;
 				LayoutInflater factory = LayoutInflater.from(mContext);
-				View dialogView = factory.inflate(R.layout.score_post_panel,
-						null);
+				View dialogView = factory.inflate(R.layout.score_post_panel,null);
 				dialogView.setFocusableInTouchMode(true);
 				dialogView.requestFocus();
 
-//				final EditText usernameEditText = (EditText) dialogView
-//						.findViewById(R.id.namefield);
-//				usernameEditText.setText(mContext.getSharedPreferences(
-//						ConstantInfo.PREFERENCE_RANKING_INFO, 0).getString(
-//						ConstantInfo.PREFERENCE_KEY_RANKING_NAME, ""));
 				final AlertDialog dialog = new AlertDialog.Builder(mContext)
 						.setView(dialogView).create();
-				if (recordRefreshed) {
-					dialog.setIcon(R.drawable.tip_new_record);
-					dialog.setTitle(R.string.gameover_dialog_text_newrecord);
-				} else {
 					if (curScore < 100) {
 						dialog.setIcon(R.drawable.tip_pool_guy);
 						dialog.setTitle(R.string.gameover_dialog_text_poolguy);
@@ -130,13 +116,30 @@ public class AgileBuddyView extends SurfaceView implements
 						dialog.setIcon(R.drawable.tip_awesome);
 						dialog.setTitle(R.string.gameover_dialog_text_awesome);
 					}
-				}
-				dialog.show();
-
+				dialog.show();	
+				dialogView.findViewById(R.id.retry).setOnClickListener(
+						new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								dialog.dismiss();
+								restartGame();
+							}
+						});
+				dialogView.findViewById(R.id.goback).setOnClickListener(
+						new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+							dialog.dismiss();	
+							((AgileBuddyActivity) mContext).finish();
+							}
+						});
 			}
 		};
 		// 初始化资源
-		initRes();
+		int role = 2;
+//		String role = "role2";
+		initRes(role);
+		
 		mUIThread = new AgileThread(holder, context, mHandler);
 		setFocusable(true);
 	}
@@ -187,31 +190,31 @@ public class AgileBuddyView extends SurfaceView implements
 		mUIThread.start();
 	}
 
-	public boolean updateLocalRecord(int score) {
-		SharedPreferences rankingSettings = mContext.getSharedPreferences(
-				ConstantInfo.PREFERENCE_RANKING_INFO, 0);
-		if (rankingSettings
-				.getInt(ConstantInfo.PREFERENCE_KEY_RANKING_SCORE, 0) < score) {
-			SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-			rankingSettings.edit().putInt(
-					ConstantInfo.PREFERENCE_KEY_RANKING_SCORE, score)
-					.putString(ConstantInfo.PREFERENCE_KEY_RANKING_DATE,
-							formatter.format(new Date())).commit();
-			return true;
-		}
-		return false;
-	}
+//	public boolean updateLocalRecord(int score) {
+//		SharedPreferences rankingSettings = mContext.getSharedPreferences(
+//				ConstantInfo.PREFERENCE_RANKING_INFO, 0);
+//		if (rankingSettings
+//				.getInt(ConstantInfo.PREFERENCE_KEY_RANKING_SCORE, 0) < score) {
+//			SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+//			rankingSettings.edit().putInt(
+//					ConstantInfo.PREFERENCE_KEY_RANKING_SCORE, score)
+//					.putString(ConstantInfo.PREFERENCE_KEY_RANKING_DATE,
+//							formatter.format(new Date())).commit();
+//			return true;
+//		}
+//		return false;
+//	}
 
-	private void showToast(int strId) {
-		Toast toast = Toast.makeText(mContext, strId, Toast.LENGTH_SHORT);
-		toast.setGravity(Gravity.TOP, 0, 220);
-		toast.show();
-	}
+//	private void showToast(int strId) {
+//		Toast toast = Toast.makeText(mContext, strId, Toast.LENGTH_SHORT);
+//		toast.setGravity(Gravity.TOP, 0, 220);
+//		toast.show();
+//	}
 
 	/**
 	 * 初始化资源
 	 */
-	private void initRes() {
+	private void initRes(int role) {
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(mContext);
 		mSoundsFlag = preferences.getBoolean(
@@ -252,15 +255,36 @@ public class AgileBuddyView extends SurfaceView implements
 		mGameMsgRightPaint.setTypeface(Typeface.DEFAULT_BOLD);
 
 		Resources res = mContext.getResources();
-
-		mTopBarImage = res.getDrawable(R.drawable.top_bar);
+		
+		mTopBarImage = res.getDrawable(R.drawable.rect);
 		mHpBarTotalImage = res.getDrawable(R.drawable.hp_bar_total);
 		mHpBarRemainImage = res.getDrawable(R.drawable.hp_bar_remain);
-
-		mRole = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.role1),
-				7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
-				UIModel.ROLE_ATTRIBUTE_HEITH,false);
+		switch (role){
+		case 1:
+			mRole = Bitmap.createScaledBitmap(BitmapFactory
+					.decodeResource(res, R.drawable.role1),
+					7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
+					UIModel.ROLE_ATTRIBUTE_HEITH,false);
+			break;
+		case 2:
+			mRole = Bitmap.createScaledBitmap(BitmapFactory
+					.decodeResource(res, R.drawable.role2),
+					7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
+					UIModel.ROLE_ATTRIBUTE_HEITH,false);
+			break;
+		case 3:
+			mRole = Bitmap.createScaledBitmap(BitmapFactory
+					.decodeResource(res, R.drawable.role3),
+					7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
+					UIModel.ROLE_ATTRIBUTE_HEITH,false);
+			break;
+		default :
+			mRole = Bitmap.createScaledBitmap(BitmapFactory
+					.decodeResource(res, R.drawable.role1),
+					7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
+					UIModel.ROLE_ATTRIBUTE_HEITH,false);
+			break;
+		}
 		mRoleSplitter = new ImageSplitter();
 		mRolePiece = mRoleSplitter.split(mRole, 7, 1);
 
@@ -372,7 +396,7 @@ public class AgileBuddyView extends SurfaceView implements
 			canvas.drawBitmap(mBackgroundImage, 0, 0, null);
 			mTopBarImage.setBounds(0, 0,
 					AgileBuddyView.this.mScreenAttribute.maxX,
-					AgileBuddyView.this.mScreenAttribute.minY);
+					AgileBuddyView.this.mScreenAttribute.maxY);
 			mTopBarImage.draw(canvas);
 
 			List<Footboard> footboards = mUIModel.getFootboardUIObjects();
@@ -386,7 +410,17 @@ public class AgileBuddyView extends SurfaceView implements
 					}
 					break;
 				case UIModel.FOOTBOARD_TYPE_SPRING:
-					tempBitmap = mFootboardPieces.get(2).bitmap;
+					if(footboard.isOnRole()){
+					if (footboard.nextFrame() == 0) {
+						tempBitmap = mFootboardPieces.get(2).bitmap;
+					} else if (footboard.nextFrame() == 1) {
+						tempBitmap = mFootboardPieces.get(3).bitmap;
+					} else {
+						tempBitmap = mFootboardPieces.get(4).bitmap;
+					}
+					} else {
+						tempBitmap = mFootboardPieces.get(2).bitmap;
+					}
 					break;
 				case UIModel.FOOTBOARD_TYPE_SPIKED:
 					tempBitmap = mFootboardPieces.get(1).bitmap;
@@ -461,8 +495,7 @@ public class AgileBuddyView extends SurfaceView implements
 
 			FontMetrics fmsr = mGameMsgLeftPaint.getFontMetrics();
 			canvas.drawText(mUIModel.getScoreStr(), (float) 5,
-					(float) AgileBuddyView.this.mScreenAttribute.maxY - 20
-							- (fmsr.ascent + fmsr.descent), mGameMsgLeftPaint);
+					(float) 20 - (fmsr.ascent + fmsr.descent), mGameMsgLeftPaint);
 
 			mHpBarTotalImage.setBounds(
 					(AgileBuddyView.this.mScreenAttribute.maxX / 3),
@@ -482,8 +515,7 @@ public class AgileBuddyView extends SurfaceView implements
 			fmsr = mGameMsgRightPaint.getFontMetrics();
 			canvas.drawText(mUIModel.getLevel(),
 					(float) (AgileBuddyView.this.mScreenAttribute.maxX - 5),
-					(float) AgileBuddyView.this.mScreenAttribute.maxY - 20
-							- (fmsr.ascent + fmsr.descent), mGameMsgRightPaint);
+					(float) 20 - (fmsr.ascent + fmsr.descent), mGameMsgRightPaint);
 		}
 
 		public void initUIModel(ScreenAttribute screenAttribut) {

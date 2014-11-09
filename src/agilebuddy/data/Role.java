@@ -5,8 +5,6 @@ import agilebuddy.material.UIModel;
 
 /**
  * 
- * @author void1898@gmail.com
- * 
  * @version 1.2.3
  * 
  */

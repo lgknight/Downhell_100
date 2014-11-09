@@ -1,11 +1,9 @@
 package com.example.downhell_100;
 
 import android.app.Activity;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,8 +26,11 @@ public class AgileBuddyActivity extends Activity {
 		// È«ÆÁÄ»
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		setContentView(R.layout.main);
+		
 		mAgileBuddyView = (AgileBuddyView) findViewById(R.id.agile_buddy);
+		
 		mLeft = (Button)findViewById(R.id.left);
 		mRight =(Button)findViewById(R.id.right);
 		
@@ -52,7 +53,7 @@ public class AgileBuddyActivity extends Activity {
 				} else if(event.getAction() == event.ACTION_UP) 
 					mAgileBuddyView.handleMoving(0);
 				
-				return false;
+				return true;
 			}
 		}; 
 		mLeft.setOnTouchListener(buttonListener);

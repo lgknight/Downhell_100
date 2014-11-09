@@ -6,48 +6,33 @@
 <FrameLayout 
 	android:background="@drawable/bg0" android:orientation="vertical"
 	android:layout_width="fill_parent" android:layout_height="wrap_content">
-	<LinearLayout android:orientation="vertical"
-		android:layout_height="wrap_content" android:layout_width="fill_parent"
-		android:layout_gravity="center">
-		<ImageView android:layout_width="fill_parent"
-			android:layout_height="150dip" android:scaleType="center" android:src="@drawable/title" />
 		<LinearLayout android:orientation="vertical"
 			android:layout_height="wrap_content" android:layout_width="fill_parent"
 			android:layout_gravity="center">
 			<Button android:id="@+id/start_game" android:layout_width="220dip"
-				android:layout_height="wrap_content" android:layout_gravity="center"
+				android:layout_height="40dip" android:layout_gravity="center"
 				android:text="@string/start_game" android:textColor="#FF292066"
 				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
-				android:layout_marginBottom="3dip" />
-<!-- 			<Button android:id="@+id/score_board" android:layout_width="220dip"
-				android:layout_height="wrap_content" android:layout_gravity="center"
-				android:text="@string/score_board" android:textColor="#FF292066"
-				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
-				android:layout_marginBottom="3dip" />
-			<Button android:id="@+id/options" android:layout_width="220dip"
-				android:layout_height="wrap_content" android:layout_gravity="center"
-				android:text="@string/options" android:textColor="#FF292066"
-				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
-				android:layout_marginBottom="3dip" />
-			<Button android:id="@+id/more_app" android:layout_width="220dip"
-				android:layout_height="wrap_content" android:layout_gravity="center"
-				android:text="@string/more_app" android:textColor="#FF292066"
-				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
-				android:layout_marginBottom="3dip" /> -->
+				android:layout_marginBottom="30dip" />
+			
 			<Button android:id="@+id/exit" android:layout_width="220dip"
-				android:layout_height="wrap_content" android:layout_gravity="center"
+				android:layout_height="40dip" android:layout_gravity="center"
 				android:text="@string/exit" android:textColor="#FF292066"
 				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
-				android:layout_marginBottom="3dip" />
+				android:layout_marginBottom="30dip" />
 
-	
 		</LinearLayout>
-
-	</LinearLayout>
      <RelativeLayout android:id="@+id/adcontainer"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true">
 	</RelativeLayout>
+
+     <ImageView
+         android:layout_width="fill_parent"
+         android:layout_height="200dip"
+         android:scaleType="fitCenter"
+         android:src="@drawable/title" />
+
 </FrameLayout>
 
 </LinearLayout>

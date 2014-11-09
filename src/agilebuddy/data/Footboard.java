@@ -1,6 +1,7 @@
 package agilebuddy.data;
 
 import agilebuddy.material.UIModel;
+import android.R.bool;
 
 /**
  * 
@@ -35,7 +36,17 @@ public class Footboard {
 
 	// 不稳定踏板可滞留时间
 	private int mUnstableBoardDelay;
-
+	
+	private boolean mOnRole = false;
+	
+	public boolean isOnRole(){
+		return mOnRole;
+	}
+	
+	public void setOnRole(boolean T){
+		mOnRole = T;
+	}
+	
 	public int getVirtualY() {
 		return mVirtualY;
 	}
@@ -43,14 +54,12 @@ public class Footboard {
 	public int getMinX() {
 		return mX;
 	}
-
+	
 	public int getMaxX() {
 		return mX + mWidth;
 	}
 
 	public int getMinY() {
-//		return mVirtualY / UIModel.GAME_ATTRIBUTE_PIXEL_DENSITY_Y - 5 * mHeith / 6;
-
 		return mVirtualY / UIModel.GAME_ATTRIBUTE_PIXEL_DENSITY_Y;
 	}
 
