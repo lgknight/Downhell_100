@@ -1,7 +1,6 @@
 package agilebuddy.data;
 
 import agilebuddy.material.UIModel;
-import android.R.bool;
 
 /**
  * 
@@ -37,15 +36,6 @@ public class Footboard {
 	// 不稳定踏板可滞留时间
 	private int mUnstableBoardDelay;
 	
-	private boolean mOnRole = false;
-	
-	public boolean isOnRole(){
-		return mOnRole;
-	}
-	
-	public void setOnRole(boolean T){
-		mOnRole = T;
-	}
 	
 	public int getVirtualY() {
 		return mVirtualY;

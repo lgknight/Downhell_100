@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import agilebuddy.data.*;
+import android.R.integer;
 
 /**
 * 
@@ -84,6 +85,11 @@ public class UIModel {
 	// 踏板的长宽
 	public static final int BORDER_ATTRIBUTE_IMAGE_HEITH = 20;
 	public static final int BORDER_ATTRIBUTE_IMAGE_WIDTH = 100;
+	
+	//金币长高
+	public static final int COIN_ATTRIBUTE_IMAGE_HEIGHT = 25;
+	public static final int COIN_ATTRIBUTE_IMAGE_WIDTH = 25;
+	
 
 	// 踏板偏向速度
 	public static final int BOARD_ATTRIBUTE_LEFT_VELOCITY = -4;
@@ -112,10 +118,12 @@ public class UIModel {
 
 	// 游戏得分
 	private int mScore = 0;
-
+	
 	// 当前难度等级
 	private int mLevel = 1;
-
+	
+	//金币数量
+	private int mCoinNumber = 0; 
 	// 生命值
 	private int mHP = ROLE_ATTRIBUTE_HP_MAX;
 
@@ -146,6 +154,7 @@ public class UIModel {
 	/**
 	 * 道具属性
 	 */
+	private Coin mCoin;
 
 	// 楼梯间隔距离因数(间隔距离(px)=因数/Y方向像素因数)
 	private int mFootboardSpaceFactor = 120 * GAME_ATTRIBUTE_PIXEL_DENSITY_Y;
@@ -158,7 +167,9 @@ public class UIModel {
 
 	// 踏板列表
 	private LinkedList<Footboard> mFootboardList;
-
+	
+	//金币列表
+	private LinkedList<Coin> mCoinList;
 
 	public UIModel(ScreenAttribute screenAttribute, int addVelocity) {
 		mScreenAttribute = screenAttribute;
@@ -172,6 +183,10 @@ public class UIModel {
 				(screenAttribute.maxX - BORDER_ATTRIBUTE_IMAGE_WIDTH) / 2,
 				screenAttribute.maxY, BORDER_ATTRIBUTE_IMAGE_WIDTH,
 				BORDER_ATTRIBUTE_IMAGE_HEITH, FOOTBOARD_TYPE_NORMAL, 1, 1));
+		mCoinList = new LinkedList<Coin>();
+		mCoinList.add(new Coin((screenAttribute.maxX - COIN_ATTRIBUTE_IMAGE_WIDTH) / 2, 
+				screenAttribute.maxY * 3 /4, COIN_ATTRIBUTE_IMAGE_WIDTH, 
+				COIN_ATTRIBUTE_IMAGE_HEIGHT));
 	}
 
 	/**
@@ -181,6 +196,9 @@ public class UIModel {
 		for (Footboard footboard : mFootboardList) {
 			footboard.addY(mFootboartVelocity);
 		}
+		for (Coin coin:mCoinList){
+			coin.addY(mFootboartVelocity);
+		}
 		mRole.addX(mRoleVelocityX);
 		mRole.addY(mRoleVelocityY);
 		handleBorder();
@@ -189,6 +207,7 @@ public class UIModel {
 		if (mFootboardSpaceCounter >= mFootboardSpaceFactor) {
 			mFootboardSpaceCounter -= mFootboardSpaceFactor;
 			generateFootboard();
+			generateCoin();
 			mLevelUpCounter += 1;
 			if (mLevelUpCounter == GAME_ATTRIBUTE_LEVEL_UP_FACTOR) {
 				mLevelUpCounter = 0;
@@ -243,6 +262,16 @@ public class UIModel {
 				BORDER_ATTRIBUTE_IMAGE_HEITH, frameType, frameAmount,
 				frameDelay));
 	}
+	
+	/** 
+	 * 随机生成金币
+	 */
+	
+	private void generateCoin(){
+		mCoinList.add(new Coin(mRan.nextInt(mScreenAttribute.maxX - COIN_ATTRIBUTE_IMAGE_WIDTH),
+				mScreenAttribute.maxY + COIN_ATTRIBUTE_IMAGE_HEIGHT, COIN_ATTRIBUTE_IMAGE_WIDTH, COIN_ATTRIBUTE_IMAGE_HEIGHT));
+	}
+	
 	/**
 	 * 处理主角移动
 	 * 
@@ -276,6 +305,9 @@ public class UIModel {
 		if (mFootboardList.size() > 0
 				&& mFootboardList.getFirst().getMaxY() <= mScreenAttribute.minY) {
 			mFootboardList.remove();
+		}
+		if (mCoinList.size() > 0 && mCoinList.getFirst().getMaxY() <= mScreenAttribute.minY) {
+			mCoinList.remove();
 		}
 		if (mRole.getMinY() <= mScreenAttribute.minY) {
 			mHP -= 3;
@@ -322,7 +354,7 @@ public class UIModel {
 						mRoleVelocityY = 1 * (mFootboartVelocity - GAME_ATTRIBUTE_GRAVITY_VELOCITY);
 						role.addY(-1 * GAME_ATTRIBUTE_PIXEL_DENSITY_Y);
 						updateRoleStatus(ROLE_STATUS_FREEFALL);
-						footboard.setOnRole(false);
+						 
 						return;
 					}
 					if (footboard.getType() == FOOTBOARD_TYPE_MOVING_LEFT) {
@@ -333,7 +365,6 @@ public class UIModel {
 							&& footboard.isBoardBreak()) {
 						mFootboardList.remove(footboard);
 					}
-					footboard.setOnRole(true);
 					updateRoleStatus(ROLE_STATUS_ON_FOOTBOARD);
 				} else {
 					// 主角第一次触板
@@ -368,11 +399,19 @@ public class UIModel {
 					default:
 						mEffectFlag = EFFECT_FLAG_NORMAL;
 					}
-				}
-				footboard.setOnRole(true);
+				} 
 				return;
 			}
 		}
+		for (Coin coin:mCoinList){
+			if((role.getMaxY() >= coin.getMinY() &&role.getMaxY() < coin.getMaxY()) 
+					&&((role.getMaxX() > coin.getMinX() &&role.getMaxX() <= coin.getMaxX())
+					||(role.getMinX() < coin.getMaxX() &&role.getMinX() >= coin.getMinX()))) {
+				mCoinNumber ++;
+				mCoinList.remove();
+				}
+		}
+		
 		if (mRoleVelocityY < mFootboartVelocity) {
 			mRoleVelocityY += 3;
 		} else {
@@ -419,7 +458,10 @@ public class UIModel {
 	public List<Footboard> getFootboardUIObjects() {
 		return mFootboardList;
 	}
-
+	
+	public List<Coin> getCoinUIObjects(){
+		return mCoinList;
+	}
 
 	public int getEffectFlag() {
 		try {

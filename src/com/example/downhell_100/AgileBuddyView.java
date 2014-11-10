@@ -3,9 +3,7 @@ package com.example.downhell_100;
 import java.util.HashMap;
 import java.util.List; 
 
-import agilebuddy.data.Footboard;
-import agilebuddy.data.Role;
-import agilebuddy.data.ScreenAttribute;
+import agilebuddy.data.*;
 import agilebuddy.material.UIModel;
 import agilebuddy.util.ConstantInfo;
 
@@ -75,7 +73,8 @@ public class AgileBuddyView extends SurfaceView implements
 	private Bitmap mFootboard;	
 	private ImageSplitter mFootboardSplitter;
 	private List <ImagePiece> mFootboardPieces;
-	
+
+	private Bitmap mCoinBitmap;
 	
 	private Bitmap mRoleDeadmanImage;
 
@@ -321,6 +320,9 @@ public class AgileBuddyView extends SurfaceView implements
 			mFootboardPieces.add(imagePiece);
 		}
 		
+		mCoinBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(res, R.drawable.item1),
+				UIModel.COIN_ATTRIBUTE_IMAGE_WIDTH, UIModel.COIN_ATTRIBUTE_IMAGE_HEIGHT, true);
+		
 		mRoleDeadmanImage = Bitmap.createScaledBitmap(BitmapFactory
 				.decodeResource(res, R.drawable.role_dead),
 				UIModel.ROLE_ATTRIBUTE_WIDTH, UIModel.ROLE_ATTRIBUTE_HEITH,
@@ -410,16 +412,12 @@ public class AgileBuddyView extends SurfaceView implements
 					}
 					break;
 				case UIModel.FOOTBOARD_TYPE_SPRING:
-					if(footboard.isOnRole()){
 					if (footboard.nextFrame() == 0) {
 						tempBitmap = mFootboardPieces.get(2).bitmap;
 					} else if (footboard.nextFrame() == 1) {
 						tempBitmap = mFootboardPieces.get(3).bitmap;
 					} else {
 						tempBitmap = mFootboardPieces.get(4).bitmap;
-					}
-					} else {
-						tempBitmap = mFootboardPieces.get(2).bitmap;
 					}
 					break;
 				case UIModel.FOOTBOARD_TYPE_SPIKED:
@@ -453,7 +451,7 @@ public class AgileBuddyView extends SurfaceView implements
 				canvas.drawBitmap(tempBitmap, footboard.getMinX(), footboard
 						.getMinY() - 30, null);
 			}
-
+			
 			Role role = mUIModel.getRoleUIObject();
 			if (mUIModel.mGameStatus == UIModel.GAME_STATUS_GAMEOVER) {
 				canvas.drawBitmap(mRoleDeadmanImage, role.getMinX(), role.getMinY(), null);
@@ -493,6 +491,11 @@ public class AgileBuddyView extends SurfaceView implements
 						null);
 			}
 
+			List<Coin> coinList = mUIModel.getCoinUIObjects();
+			for(Coin coin : coinList){
+				canvas.drawBitmap(mCoinBitmap, coin.getMinX(), coin.getMinY(),null);
+			}
+			
 			FontMetrics fmsr = mGameMsgLeftPaint.getFontMetrics();
 			canvas.drawText(mUIModel.getScoreStr(), (float) 5,
 					(float) 20 - (fmsr.ascent + fmsr.descent), mGameMsgLeftPaint);
