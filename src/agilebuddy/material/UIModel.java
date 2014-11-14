@@ -43,6 +43,7 @@ public class UIModel {
 	public static final int EFFECT_FLAG_SPIKED = 4;
 	public static final int EFFECT_FLAG_MOVING = 5;
 	public static final int EFFECT_FLAG_TOOLS = 6;
+	public static final int EFFECT_FLAG_GETCOIN = 7;
 
 	/**
 	 * 主角属性常量
@@ -185,7 +186,7 @@ public class UIModel {
 				BORDER_ATTRIBUTE_IMAGE_HEITH, FOOTBOARD_TYPE_NORMAL, 1, 1));
 		mCoinList = new LinkedList<Coin>();
 		mCoinList.add(new Coin((screenAttribute.maxX - COIN_ATTRIBUTE_IMAGE_WIDTH) / 2, 
-				screenAttribute.maxY * 3 /4, COIN_ATTRIBUTE_IMAGE_WIDTH, 
+				screenAttribute.maxY - 25, COIN_ATTRIBUTE_IMAGE_WIDTH, 
 				COIN_ATTRIBUTE_IMAGE_HEIGHT));
 	}
 
@@ -207,7 +208,7 @@ public class UIModel {
 		if (mFootboardSpaceCounter >= mFootboardSpaceFactor) {
 			mFootboardSpaceCounter -= mFootboardSpaceFactor;
 			generateFootboard();
-			generateCoin();
+			generateCoin(mFootboardList.getLast().getMinX());
 			mLevelUpCounter += 1;
 			if (mLevelUpCounter == GAME_ATTRIBUTE_LEVEL_UP_FACTOR) {
 				mLevelUpCounter = 0;
@@ -267,9 +268,15 @@ public class UIModel {
 	 * 随机生成金币
 	 */
 	
-	private void generateCoin(){
-		mCoinList.add(new Coin(mRan.nextInt(mScreenAttribute.maxX - COIN_ATTRIBUTE_IMAGE_WIDTH),
-				mScreenAttribute.maxY + COIN_ATTRIBUTE_IMAGE_HEIGHT, COIN_ATTRIBUTE_IMAGE_WIDTH, COIN_ATTRIBUTE_IMAGE_HEIGHT));
+	private void generateCoin(int boardMinX){
+		int randomInt = mRan.nextInt(10);
+		int randomX = mRan.nextInt(BORDER_ATTRIBUTE_IMAGE_WIDTH - COIN_ATTRIBUTE_IMAGE_WIDTH);
+		if (randomInt < 7) {
+		for (int i = 0; i < randomInt % 2 + 1; i++) {
+		mCoinList.add(new Coin(boardMinX + randomX + i * COIN_ATTRIBUTE_IMAGE_WIDTH,
+				mScreenAttribute.maxY - 5 + COIN_ATTRIBUTE_IMAGE_HEIGHT, COIN_ATTRIBUTE_IMAGE_WIDTH, COIN_ATTRIBUTE_IMAGE_HEIGHT));
+		}
+		}
 	}
 	
 	/**
@@ -403,12 +410,13 @@ public class UIModel {
 				return;
 			}
 		}
-		for (Coin coin:mCoinList){
+		for (Coin coin:mCoinList) {
 			if((role.getMaxY() >= coin.getMinY() &&role.getMaxY() < coin.getMaxY()) 
 					&&((role.getMaxX() > coin.getMinX() &&role.getMaxX() <= coin.getMaxX())
 					||(role.getMinX() < coin.getMaxX() &&role.getMinX() >= coin.getMinX()))) {
 				mCoinNumber ++;
-				mCoinList.remove();
+				mCoinList.remove(coin);
+				mEffectFlag = EFFECT_FLAG_GETCOIN;
 				}
 		}
 		

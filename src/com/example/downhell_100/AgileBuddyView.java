@@ -97,7 +97,6 @@ public class AgileBuddyView extends SurfaceView implements
 				// 更新本地记录文件
 				int curScore = m.getData().getInt(HANDLE_MESSAGE_GAME_SCORE);
 //				boolean recordRefreshed = updateLocalRecord(curScore);
-//				Global.score = curScore;
 				LayoutInflater factory = LayoutInflater.from(mContext);
 				View dialogView = factory.inflate(R.layout.score_post_panel,null);
 				dialogView.setFocusableInTouchMode(true);
@@ -136,7 +135,6 @@ public class AgileBuddyView extends SurfaceView implements
 		};
 		// 初始化资源
 		int role = 2;
-//		String role = "role2";
 		initRes(role);
 		
 		mUIThread = new AgileThread(holder, context, mHandler);
@@ -224,7 +222,7 @@ public class AgileBuddyView extends SurfaceView implements
 				.getInt(ConstantInfo.PREFERENCE_KEY_POWER, 40);
 
 		// 初始化活动音效
-		soundPool = new SoundPool(10, AudioManager.STREAM_RING, 5);
+		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 5);
 		soundPoolMap = new HashMap<Integer, Integer>();
 		soundPoolMap.put(UIModel.EFFECT_FLAG_NORMAL, soundPool.load(
 				getContext(), R.raw.normal, 1));
@@ -238,6 +236,8 @@ public class AgileBuddyView extends SurfaceView implements
 				getContext(), R.raw.moving, 1));
 		soundPoolMap.put(UIModel.EFFECT_FLAG_TOOLS, soundPool.load(
 				getContext(), R.raw.tools, 1));
+		soundPoolMap.put(UIModel.EFFECT_FLAG_GETCOIN, soundPool.load(
+		getContext(), R.raw.getcoin, 1));
 
 		mGameMsgLeftPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mGameMsgLeftPaint.setColor(Color.YELLOW);
