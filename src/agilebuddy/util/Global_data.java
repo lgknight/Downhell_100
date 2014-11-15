@@ -4,5 +4,5 @@ import android.R.integer;
 
 public class Global_data {
 		public static int tempRole;
-		public static int money;
+		public static int money = 0;
 }

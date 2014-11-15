@@ -479,8 +479,8 @@ public class UIModel {
 		}
 	}
 
-	public String getLevel() {
-		return "LV: " + mLevel;
+	public int getCoin() {
+		return  mCoinNumber;
 	}
 
 	public String getScoreStr() {

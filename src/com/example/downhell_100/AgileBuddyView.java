@@ -23,12 +23,14 @@ import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore.Audio.Media;
 import android.util.AttributeSet;
 import android.util.Log; 
 import android.view.LayoutInflater;
@@ -47,7 +49,7 @@ public class AgileBuddyView extends SurfaceView implements
 		SurfaceHolder.Callback {
 
 	private static final String HANDLE_MESSAGE_GAME_SCORE = "1";
-
+	private static final String HANDLE_MESSAGE_GAME_COIN = "0";
 	private AgileThread mUIThread;
 
 	private Context mContext;
@@ -97,6 +99,8 @@ public class AgileBuddyView extends SurfaceView implements
 			public void handleMessage(Message m) {
 				// 更新本地记录文件
 				int curScore = m.getData().getInt(HANDLE_MESSAGE_GAME_SCORE);
+				int finalcoin = m.getData().getInt(HANDLE_MESSAGE_GAME_COIN);
+				Global_data.money += finalcoin;
 //				boolean recordRefreshed = updateLocalRecord(curScore);
 				LayoutInflater factory = LayoutInflater.from(mContext);
 				View dialogView = factory.inflate(R.layout.score_post_panel,null);
@@ -137,7 +141,6 @@ public class AgileBuddyView extends SurfaceView implements
 		// 初始化资源
 		int role = Global_data.tempRole;
 		initRes(role);
-		
 		mUIThread = new AgileThread(holder, context, mHandler);
 		setFocusable(true);
 	}
@@ -188,26 +191,6 @@ public class AgileBuddyView extends SurfaceView implements
 		mUIThread.start();
 	}
 
-//	public boolean updateLocalRecord(int score) {
-//		SharedPreferences rankingSettings = mContext.getSharedPreferences(
-//				ConstantInfo.PREFERENCE_RANKING_INFO, 0);
-//		if (rankingSettings
-//				.getInt(ConstantInfo.PREFERENCE_KEY_RANKING_SCORE, 0) < score) {
-//			SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-//			rankingSettings.edit().putInt(
-//					ConstantInfo.PREFERENCE_KEY_RANKING_SCORE, score)
-//					.putString(ConstantInfo.PREFERENCE_KEY_RANKING_DATE,
-//							formatter.format(new Date())).commit();
-//			return true;
-//		}
-//		return false;
-//	}
-
-//	private void showToast(int strId) {
-//		Toast toast = Toast.makeText(mContext, strId, Toast.LENGTH_SHORT);
-//		toast.setGravity(Gravity.TOP, 0, 220);
-//		toast.show();
-//	}
 
 	/**
 	 * 初始化资源
@@ -275,6 +258,18 @@ public class AgileBuddyView extends SurfaceView implements
 		case 3:
 			mRole = Bitmap.createScaledBitmap(BitmapFactory
 					.decodeResource(res, R.drawable.role3),
+					7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
+					UIModel.ROLE_ATTRIBUTE_HEITH,false);
+			break;
+		case 4:
+			mRole = Bitmap.createScaledBitmap(BitmapFactory
+					.decodeResource(res, R.drawable.role4),
+					7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
+					UIModel.ROLE_ATTRIBUTE_HEITH,false);
+			break;
+		case 5:
+			mRole = Bitmap.createScaledBitmap(BitmapFactory
+					.decodeResource(res, R.drawable.role5),
 					7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
 					UIModel.ROLE_ATTRIBUTE_HEITH,false);
 			break;
@@ -384,6 +379,8 @@ public class AgileBuddyView extends SurfaceView implements
 						Bundle bundle = new Bundle();
 						bundle.putInt(AgileBuddyView.HANDLE_MESSAGE_GAME_SCORE,
 								mUIModel.getScore());
+						bundle.putInt(AgileBuddyView.HANDLE_MESSAGE_GAME_COIN, 
+								mUIModel.getCoin());
 						message.setData(bundle);
 						mHandler.sendMessage(message);
 						mRun = false;
@@ -517,7 +514,7 @@ public class AgileBuddyView extends SurfaceView implements
 			mHpBarRemainImage.draw(canvas);
 
 			fmsr = mGameMsgRightPaint.getFontMetrics();
-			canvas.drawText(mUIModel.getLevel(),
+			canvas.drawText("$: " + mUIModel.getCoin(),
 					(float) (AgileBuddyView.this.mScreenAttribute.maxX - 5),
 					(float) 20 - (fmsr.ascent + fmsr.descent), mGameMsgRightPaint);
 		}
@@ -598,5 +595,11 @@ public class AgileBuddyView extends SurfaceView implements
 			mRun = run;
 		}
 	}// Thread
-
+	
+//	class BgMusicThread extends Thread {
+//		MediaPlayer Player;
+//		public void run() {
+//			Player = MediaPlayer.create(AgileBuddyView.this,R.raw.bg1);
+//		}
+//	}
 }

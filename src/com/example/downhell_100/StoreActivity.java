@@ -19,18 +19,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class StoreActivity extends Activity implements OnClickListener{
+public class StoreActivity extends Activity {
 	
 	private SimpleAdapter spAdapter;
 	private ListView listView;
 	private List<Map<String, Object>> list;
 	
 	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	public void onCreate(Bundle onSaveInstanceState) {
 		super.onCreate(onSaveInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -44,10 +39,18 @@ public class StoreActivity extends Activity implements OnClickListener{
 		list = new ArrayList<Map<String,Object>>();
 		listView = new ListView(this);
 		
+		
 		Map<String, Object> map = new HashMap<String ,Object>();
+		map.put("storerole", R.drawable.coin1);
+		map.put("rolename", "coin:" + Global_data.money);
+		map.put("cost", "");
+		map.put("buyid", "更多");
+		list.add(map);
+		
+		map = new HashMap<String ,Object>();
 		map.put("storerole", R.drawable.storerole1);
 		map.put("rolename", "星矢");
-		map.put("cost", "0金币");
+		map.put("cost", "000金币");
 		map.put("buyid", "购买");
 		list.add(map);
 		
@@ -61,21 +64,21 @@ public class StoreActivity extends Activity implements OnClickListener{
 		map = new HashMap<String ,Object>();
 		map.put("storerole", R.drawable.storerole3);
 		map.put("rolename", "紫龙");
-		map.put("cost", "150金币");
+		map.put("cost", "200金币");
 		map.put("buyid", "购买");
 		list.add(map);
 		
 		map = new HashMap<String ,Object>();
 		map.put("storerole", R.drawable.storerole4);
 		map.put("rolename", "冰河");
-		map.put("cost", "200金币");
+		map.put("cost", "300金币");
 		map.put("buyid", "购买");
 		list.add(map);
 		
 		map = new HashMap<String ,Object>();
 		map.put("storerole", R.drawable.storerole5);
 		map.put("rolename", "一辉");
-		map.put("cost", "300金币");
+		map.put("cost", "400金币");
 		map.put("buyid", "购买");
 		list.add(map);
 		
@@ -88,19 +91,25 @@ public class StoreActivity extends Activity implements OnClickListener{
 				Button button=(Button) view.findViewById(R.id.buyid);
 				button.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						Global_data.tempRole = p + 1;
-						Global_data.money -= 100 * (p + 1);
-						new AlertDialog.Builder(StoreActivity.this)
-						.setTitle("OK").setMessage("购买成功")
-						.create()
-						.show();
+						if(Global_data.money < 100 * ( p - 1)) {
+							new AlertDialog.Builder(StoreActivity.this)
+							.setTitle("no enough coin").setMessage("金币不足")
+							.create()
+							.show();
+						} else {
+							Global_data.tempRole = p;
+							Global_data.money -= 100 * (p + 1);
+							new AlertDialog.Builder(StoreActivity.this)
+							.setTitle("OK").setMessage("购买成功")
+							.create()
+							.show();
+						}
 					}
 				});
 				return view;
 			}
 		};
 		listView.setAdapter(spAdapter);
-		
 		setContentView(listView);
 		
 	}
