@@ -6,6 +6,7 @@ import java.util.List;
 import agilebuddy.data.*;
 import agilebuddy.material.UIModel;
 import agilebuddy.util.ConstantInfo;
+import agilebuddy.util.Global_data;
 
 import android.R.string;
 import android.app.AlertDialog;
@@ -134,7 +135,7 @@ public class AgileBuddyView extends SurfaceView implements
 			}
 		};
 		// 初始化资源
-		int role = 2;
+		int role = Global_data.tempRole;
 		initRes(role);
 		
 		mUIThread = new AgileThread(holder, context, mHandler);
@@ -301,7 +302,7 @@ public class AgileBuddyView extends SurfaceView implements
 		}
 		
 		mFootboard = Bitmap.createScaledBitmap(BitmapFactory
-				.decodeResource(res, R.drawable.footboard),
+				.decodeResource(res, R.drawable.block),
 				7 * UIModel.BORDER_ATTRIBUTE_IMAGE_WIDTH,
 				5 * UIModel.BORDER_ATTRIBUTE_IMAGE_HEITH, true);
 		mFootboardSplitter = new ImageSplitter();
@@ -320,7 +321,7 @@ public class AgileBuddyView extends SurfaceView implements
 			mFootboardPieces.add(imagePiece);
 		}
 		
-		mCoinBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(res, R.drawable.item1),
+		mCoinBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(res, R.drawable.coin1),
 				UIModel.COIN_ATTRIBUTE_IMAGE_WIDTH, UIModel.COIN_ATTRIBUTE_IMAGE_HEIGHT, true);
 		
 		mRoleDeadmanImage = Bitmap.createScaledBitmap(BitmapFactory

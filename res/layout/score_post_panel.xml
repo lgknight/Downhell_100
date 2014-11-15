@@ -23,7 +23,7 @@
         android:layout_width="320dip"
         android:layout_height="80dip"
         android:scaleType="fitCenter"
-        android:src="@drawable/coin" />
+        android:src="@drawable/finalcoin" />
 			
 <!--<TextView android:layout_width="800dip" android:layout_height="80dip" android:scaleType="fitStart" 
 	android:text="shift" android:background="@drawable/score"

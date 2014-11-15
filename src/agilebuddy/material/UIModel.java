@@ -411,9 +411,9 @@ public class UIModel {
 			}
 		}
 		for (Coin coin:mCoinList) {
-			if((role.getMaxY() >= coin.getMinY() &&role.getMaxY() < coin.getMaxY()) 
-					&&((role.getMaxX() > coin.getMinX() &&role.getMaxX() <= coin.getMaxX())
-					||(role.getMinX() < coin.getMaxX() &&role.getMinX() >= coin.getMinX()))) {
+			if((role.getMaxY() >= coin.getMinY() &&role.getMaxY() < coin.getMaxY() + ROLE_ATTRIBUTE_HEITH) 
+					&&(role.getMaxX() > coin.getMinX() &&role.getMaxX() <= coin.getMaxX() + ROLE_ATTRIBUTE_WIDTH)
+					) {
 				mCoinNumber ++;
 				mCoinList.remove(coin);
 				mEffectFlag = EFFECT_FLAG_GETCOIN;

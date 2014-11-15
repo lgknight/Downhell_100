@@ -1,29 +1,27 @@
 package com.example.downhell_100;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 
 import android.R.integer;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.media.SoundPool;
-import android.media.AudioManager;
+//import android.media.SoundPool;
+//import android.media.AudioManager;
 
 
 public class Splash extends Activity implements OnClickListener {
 	
-	private SoundPool soundPool;
-	private HashMap< integer , integer> soundPoolMap;
-	private int SOUND_TOP = 1;
-	RelativeLayout mAdContainer1;
+//	private SoundPool soundPool;
+//	private HashMap< integer , integer> soundPoolMap;
+//	private int SOUND_TOP = 1;
+//	RelativeLayout mAdContainer1;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -45,9 +43,12 @@ public class Splash extends Activity implements OnClickListener {
 		Button startButton = (Button) findViewById(R.id.start_game);
 		startButton.setOnClickListener(this);
 
+		Button storeButton = (Button) findViewById(R.id.store);
+		storeButton.setOnClickListener(this);
+		
 		Button exitButton = (Button) findViewById(R.id.exit);
 		exitButton.setOnClickListener(this);
-
+		
 	}
 	
 //	private void playSound(){
@@ -74,6 +75,12 @@ public class Splash extends Activity implements OnClickListener {
 		case R.id.start_game:
 			intent = new Intent(this, AgileBuddyActivity.class);
 			if (intent != null) {
+				startActivity(intent);
+			}
+			break;
+		case R.id.store:
+			intent = new Intent(this, StoreActivity.class);
+			if(intent != null) {
 				startActivity(intent);
 			}
 			break;
