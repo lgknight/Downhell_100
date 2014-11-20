@@ -351,6 +351,16 @@ public class UIModel {
 	 */
 	private void handleRoleAction() {
 		Role role = mRole;
+
+		for (Coin coin:mCoinList) {
+			if((role.getMaxY() >= coin.getMinY() &&role.getMaxY() < coin.getMaxY() + ROLE_ATTRIBUTE_HEITH) 
+					&&(role.getMaxX() > coin.getMinX() &&role.getMaxX() <= coin.getMaxX() + ROLE_ATTRIBUTE_WIDTH)
+					) {
+				mCoinNumber ++;
+				mCoinList.remove(coin);
+				mEffectFlag = EFFECT_FLAG_GETCOIN;
+				}
+		}
 		for (Footboard footboard : mFootboardList) {
 			if ((role.getMaxY() >= footboard.getMinY() && role.getMaxY() < footboard.getMaxY())
 					&& ((role.getMaxX() + role.getMinX()) / 2 > footboard.getMinX() && ((role.getMaxX() + role.getMinX()) / 2 < footboard.getMaxX()))) {
@@ -409,15 +419,6 @@ public class UIModel {
 				} 
 				return;
 			}
-		}
-		for (Coin coin:mCoinList) {
-			if((role.getMaxY() >= coin.getMinY() &&role.getMaxY() < coin.getMaxY() + ROLE_ATTRIBUTE_HEITH) 
-					&&(role.getMaxX() > coin.getMinX() &&role.getMaxX() <= coin.getMaxX() + ROLE_ATTRIBUTE_WIDTH)
-					) {
-				mCoinNumber ++;
-				mCoinList.remove(coin);
-				mEffectFlag = EFFECT_FLAG_GETCOIN;
-				}
 		}
 		
 		if (mRoleVelocityY < mFootboartVelocity) {

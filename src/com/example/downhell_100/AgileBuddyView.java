@@ -1,7 +1,12 @@
 package com.example.downhell_100;
 
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List; 
+import java.util.Map;
+
+import com.fogo.c.f;
 
 import agilebuddy.data.*;
 import agilebuddy.material.UIModel;
@@ -87,7 +92,9 @@ public class AgileBuddyView extends SurfaceView implements
 
 	private Paint mGameMsgRightPaint;
 	private Paint mGameMsgLeftPaint;
-
+	
+	private MediaPlayer mediaPlayer;
+	private SharedPreferences spPreferences;
 	public AgileBuddyView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
@@ -97,16 +104,30 @@ public class AgileBuddyView extends SurfaceView implements
 		mHandler = new Handler() {
 			@Override
 			public void handleMessage(Message m) {
-				// 更新本地记录文件
+				mediaPlayer.stop();
 				int curScore = m.getData().getInt(HANDLE_MESSAGE_GAME_SCORE);
 				int finalcoin = m.getData().getInt(HANDLE_MESSAGE_GAME_COIN);
 				Global_data.money += finalcoin;
-//				boolean recordRefreshed = updateLocalRecord(curScore);
+				
+				saveData(finalcoin);
+//				
+//				List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+//				Map<String,Object> map;
+//				map = new HashMap<String, Object>();
+//				map.put("score", curScore);
+//				list.add(map);
+//				map = new HashMap<String, Object>();
+//				map.put("coin", finalcoin);
+//				list.add(map);
+//				
+				
 				LayoutInflater factory = LayoutInflater.from(mContext);
 				View dialogView = factory.inflate(R.layout.score_post_panel,null);
+//				dialogView.findViewById(R.id.finalscore).setText(curScore) ;
+//				dialogView.findViewById(R.id.finalcoin).set(finalcoin) ;
 				dialogView.setFocusableInTouchMode(true);
 				dialogView.requestFocus();
-
+				
 				final AlertDialog dialog = new AlertDialog.Builder(mContext)
 						.setView(dialogView).create();
 					if (curScore < 100) {
@@ -142,9 +163,15 @@ public class AgileBuddyView extends SurfaceView implements
 		int role = Global_data.tempRole;
 		initRes(role);
 		mUIThread = new AgileThread(holder, context, mHandler);
+		playBgMusic();	
 		setFocusable(true);
 	}
 
+	public void saveData(int coinNumber) {
+		spPreferences = getContext().getSharedPreferences("objects", 0);
+		spPreferences.edit().putInt("coinNumber", coinNumber);
+	}
+	
 	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
@@ -176,7 +203,13 @@ public class AgileBuddyView extends SurfaceView implements
 			}
 		}
 	}
-
+	
+	public void playBgMusic() {
+		mediaPlayer = MediaPlayer.create(getContext(), R.raw.bg1);
+		mediaPlayer.setLooping(true);
+		mediaPlayer.start();
+	}
+	
 	public void handleMoving(int option) {
 		if (mUIThread != null) {
 			mUIThread.handleMoving(option);
@@ -189,6 +222,7 @@ public class AgileBuddyView extends SurfaceView implements
 		mUIThread.initUIModel(mScreenAttribute);
 		mUIThread.setRunning(true);
 		mUIThread.start();
+		playBgMusic();
 	}
 
 
@@ -204,7 +238,13 @@ public class AgileBuddyView extends SurfaceView implements
 				ConstantInfo.PREFERENCE_KEY_VIBRATE, true);
 		mActionPower = preferences
 				.getInt(ConstantInfo.PREFERENCE_KEY_POWER, 40);
-
+		int temp;
+		spPreferences = getContext().getSharedPreferences("objects", 0);
+		temp = spPreferences.getInt("coinNumber", -1);
+		if(temp != -1) {
+			Global_data.money = temp;
+		}
+			
 		// 初始化活动音效
 		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 5);
 		soundPoolMap = new HashMap<Integer, Integer>();
@@ -251,7 +291,7 @@ public class AgileBuddyView extends SurfaceView implements
 			break;
 		case 2:
 			mRole = Bitmap.createScaledBitmap(BitmapFactory
-					.decodeResource(res, R.drawable.role2),
+					.decodeResource(res, R.drawable.role0),
 					7 * UIModel.ROLE_ATTRIBUTE_WIDTH, 
 					UIModel.ROLE_ATTRIBUTE_HEITH,false);
 			break;
@@ -488,7 +528,7 @@ public class AgileBuddyView extends SurfaceView implements
 				canvas.drawBitmap(tempBitmap, role.getMinX(), role.getMinY(),
 						null);
 			}
-
+			
 			List<Coin> coinList = mUIModel.getCoinUIObjects();
 			for(Coin coin : coinList){
 				canvas.drawBitmap(mCoinBitmap, coin.getMinX(), coin.getMinY(),null);
@@ -596,10 +636,4 @@ public class AgileBuddyView extends SurfaceView implements
 		}
 	}// Thread
 	
-//	class BgMusicThread extends Thread {
-//		MediaPlayer Player;
-//		public void run() {
-//			Player = MediaPlayer.create(AgileBuddyView.this,R.raw.bg1);
-//		}
-//	}
 }

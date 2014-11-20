@@ -1,5 +1,7 @@
 package com.example.downhell_100;
 
+import java.io.FileOutputStream;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -58,6 +60,8 @@ public class AgileBuddyActivity extends Activity {
 		}; 
 		mLeft.setOnTouchListener(buttonListener);
 		mRight.setOnTouchListener(buttonListener);
-	
-		}
+	}
+//	public void onDestroy() {
+//		FileOutputStream fout = openFileOutput();	
+//	}
 }

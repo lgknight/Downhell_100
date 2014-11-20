@@ -1,51 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-		      android:id="@+id/adcontainer1"
-		      android:layout_width="fill_parent" 
-		      android:layout_height="fill_parent">
-<FrameLayout 
-	android:background="@drawable/startbg" android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/adcontainer1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <ImageView
-         android:layout_width="fill_parent"
-         android:layout_height="200dip"
-         android:scaleType="fitCenter"
-         android:src="@drawable/title" />
-    
-		<LinearLayout
-		    android:layout_width="fill_parent"
-		    android:layout_height="193dp"
-		    android:layout_gravity="center"
-		    android:orientation="vertical" >
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/startbg"
+        android:orientation="vertical" >
 
-			<Button android:id="@+id/start_game" android:layout_width="220dip"
-				android:layout_height="40dip" android:layout_gravity="center"
-				android:text="@string/start_game" android:textColor="#FF292066"
-				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
-				android:layout_marginBottom="30dip" />
-			
-			<Button android:id="@+id/store" android:layout_width="220dip"
-				android:layout_height="40dip" android:layout_gravity="center"
-				android:text="@string/store" android:textColor="#FF292066"
-				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
-				android:layout_marginBottom="30dip" /> 
-			
-			<Button android:id="@+id/exit" android:layout_width="220dip"
-				android:layout_height="40dip" android:layout_gravity="center"
-				android:text="@string/exit" android:textColor="#FF292066"
-				android:textSize="17sp" android:padding="8dip" android:background="@drawable/menu_button"
-				android:layout_marginBottom="30dip" />
-			
-		</LinearLayout>
-     <RelativeLayout android:id="@+id/adcontainer"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true">
-	</RelativeLayout>
+        <ImageView
+            android:id="@+id/ImageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="200dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/title" />
+        
+        <Button
+            android:id="@+id/start_game"
+            android:layout_width="220dip"
+            android:layout_height="40dip"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/ImageView1"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/menu_button"
+            android:padding="8dip"
+            android:text="@string/start_game"
+            android:textColor="#FF292066"
+            android:textSize="17sp" />
+        
+        <Button
+            android:id="@+id/store"
+            android:layout_width="220dip"
+            android:layout_height="40dip"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/start_game"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/menu_button"
+            android:padding="8dip"
+            android:text="@string/store"
+            android:textColor="#FF292066"
+            android:textSize="17sp" />
 
-     
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="220dip"
+            android:layout_height="40dip"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/store"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/menu_button"
+            android:padding="8dip"
+            android:text="@string/exit"
+            android:textColor="#FF292066"
+            android:textSize="17sp" />
 
-
-</FrameLayout>
+    </RelativeLayout>
 
 </LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/storerole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitCenter" />
+
+        <Button
+            android:id="@+id/buyid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="buy" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/storerole"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/rolename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="rolename"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/cost"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="cost"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+</RelativeLayout>
