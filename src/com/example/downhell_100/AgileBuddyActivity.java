@@ -33,8 +33,8 @@ public class AgileBuddyActivity extends Activity {
 		
 		mAgileBuddyView = (AgileBuddyView) findViewById(R.id.agile_buddy);
 		
-		mLeft = (Button)findViewById(R.id.left);
-		mRight =(Button)findViewById(R.id.right);
+		mLeft = (Button) findViewById(R.id.left);
+		mRight = (Button) findViewById(R.id.right);
 		
 		
 		View.OnTouchListener buttonListener=new View.OnTouchListener() {
@@ -60,8 +60,5 @@ public class AgileBuddyActivity extends Activity {
 		}; 
 		mLeft.setOnTouchListener(buttonListener);
 		mRight.setOnTouchListener(buttonListener);
-	}
-//	public void onDestroy() {
-//		FileOutputStream fout = openFileOutput();	
-//	}
+	} 
 }

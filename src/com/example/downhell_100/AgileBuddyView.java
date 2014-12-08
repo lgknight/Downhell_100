@@ -15,6 +15,7 @@ import agilebuddy.util.Global_data;
 
 import android.R.string;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -36,12 +37,14 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore.Audio.Media;
+import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log; 
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.TextView;
 import graphic.*;
 import android.graphics.Matrix;
 
@@ -102,14 +105,15 @@ public class AgileBuddyView extends SurfaceView implements
 		SurfaceHolder holder = getHolder();
 		holder.addCallback(this);
 		mHandler = new Handler() {
+			
 			@Override
 			public void handleMessage(Message m) {
 				mediaPlayer.stop();
 				int curScore = m.getData().getInt(HANDLE_MESSAGE_GAME_SCORE);
-				int finalcoin = m.getData().getInt(HANDLE_MESSAGE_GAME_COIN);
-				Global_data.money += finalcoin;
+				int finalCoin = m.getData().getInt(HANDLE_MESSAGE_GAME_COIN);
+				Global_data.money += finalCoin;
 				
-				saveData(finalcoin);
+				saveData(finalCoin);
 //				
 //				List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
 //				Map<String,Object> map;
@@ -123,8 +127,13 @@ public class AgileBuddyView extends SurfaceView implements
 				
 				LayoutInflater factory = LayoutInflater.from(mContext);
 				View dialogView = factory.inflate(R.layout.score_post_panel,null);
+				TextView scoreView = (TextView) dialogView.findViewById(R.id.finalscore);
+				TextView coinView = (TextView) dialogView.findViewById(R.id.finalcoin);
+				scoreView.setText("score:  " + curScore);
+				coinView.setText("Coin:  " + finalCoin);
 //				dialogView.findViewById(R.id.finalscore).setText(curScore) ;
 //				dialogView.findViewById(R.id.finalcoin).set(finalcoin) ;
+				
 				dialogView.setFocusableInTouchMode(true);
 				dialogView.requestFocus();
 				
@@ -170,6 +179,7 @@ public class AgileBuddyView extends SurfaceView implements
 	public void saveData(int coinNumber) {
 		spPreferences = getContext().getSharedPreferences("objects", 0);
 		spPreferences.edit().putInt("coinNumber", coinNumber);
+		spPreferences.edit().commit();
 	}
 	
 	@Override

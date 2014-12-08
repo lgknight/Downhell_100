@@ -41,80 +41,82 @@ public class StoreActivity extends Activity {
 		TextView coinText=(TextView) findViewById(R.id.Coin);
 		coinText.setText(String.valueOf(Global_data.money));
 		
-//		list = new ArrayList<Map<String,Object>>();
-//		listView = new ListView(this);
-//		
-//		Map<String, Object> map = new HashMap<String ,Object>();
-//		map.put("storerole", R.drawable.coin1);
-//		map.put("rolename", "coin:" + Global_data.money);
-//		map.put("cost", "");
-//		map.put("buyid", "¸ü¶à");
-//		list.add(map);
-//		
-//		map = new HashMap<String ,Object>();
-//		map.put("storerole", R.drawable.storerole1);
-//		map.put("rolename", "ÐÇÊ¸");
-//		map.put("cost", "000½ð±Ò");
-//		map.put("buyid", "¹ºÂò");
-//		list.add(map);
-//		
-//		map = new HashMap<String ,Object>();
-//		map.put("storerole", R.drawable.storerole2);
-//		map.put("rolename", "·çË²");
-//		map.put("cost", "100½ð±Ò");
-//		map.put("buyid", "¹ºÂò");
-//		list.add(map);
-//
-//		map = new HashMap<String ,Object>();
-//		map.put("storerole", R.drawable.storerole3);
-//		map.put("rolename", "×ÏÁú");
-//		map.put("cost", "200½ð±Ò");
-//		map.put("buyid", "¹ºÂò");
-//		list.add(map);
-//		
-//		map = new HashMap<String ,Object>();
-//		map.put("storerole", R.drawable.storerole4);
-//		map.put("rolename", "±ùºÓ");
-//		map.put("cost", "300½ð±Ò");
-//		map.put("buyid", "¹ºÂò");
-//		list.add(map);
-//		
-//		map = new HashMap<String ,Object>();
-//		map.put("storerole", R.drawable.storerole5);
-//		map.put("rolename", "Ò»»Ô");
-//		map.put("cost", "400½ð±Ò");
-//		map.put("buyid", "¹ºÂò");
-//		list.add(map);
-//		
-//		spAdapter= new SimpleAdapter(this, list, R.layout.store, new String[]{
-//				"storerole", "rolename"  ,"buyid"}, new int[] {
-//				R.id.storerole, R.id.rolename,R.id.buyid}) {
-//			public View getView(int position, View convertView, ViewGroup parent) {
-//				final int p = position;
-//				final View view = super.getView(position, convertView, parent);
-//				Button button=(Button) view.findViewById(R.id.buyid);
-//				button.setOnClickListener(new OnClickListener() {
-//					public void onClick(View v) {
-//						if(Global_data.money < 100 * ( p - 1)) {
-//							new AlertDialog.Builder(StoreActivity.this)
-//							.setTitle("no enough coin").setMessage("½ð±Ò²»×ã")
-//							.create()
-//							.show();
-//						} else {
-//							Global_data.tempRole = p;
-//							Global_data.money -= 100 * (p - 1);
-//							new AlertDialog.Builder(StoreActivity.this)
-//							.setTitle("OK").setMessage("¹ºÂò³É¹¦")
-//							.create()
-//							.show();
-//						}
-//					}
-//				});
-//				return view;
-//			}
-//		};
-//		listView.setAdapter(spAdapter);
-//		setContentView(listView);
+		list = new ArrayList<Map<String,Object>>();
+		listView = new ListView(this);
+		
+		Map<String, Object> map = new HashMap<String ,Object>();
+		map.put("storerole", R.drawable.coin1);
+		map.put("rolename", "coin:" + Global_data.money);
+		map.put("cost", "");
+		map.put("buyid", "¸ü¶à");
+		list.add(map);
+		
+		map = new HashMap<String ,Object>();
+		map.put("storerole", R.drawable.storerole1);
+		map.put("rolename", "ÐÇÊ¸");
+		map.put("cost", "$:0");
+		map.put("buyid", "¹ºÂò");
+		list.add(map);
+		
+		map = new HashMap<String ,Object>();
+		map.put("storerole", R.drawable.storerole2);
+		map.put("rolename", "·çË²");
+		map.put("cost", "$:100");
+		map.put("buyid", "¹ºÂò");
+		list.add(map);
+
+		map = new HashMap<String ,Object>();
+		map.put("storerole", R.drawable.storerole3);
+		map.put("rolename", "×ÏÁú");
+		map.put("cost", "$:200");
+		map.put("buyid", "¹ºÂò");
+		list.add(map);
+		
+		map = new HashMap<String ,Object>();
+		map.put("storerole", R.drawable.storerole4);
+		map.put("rolename", "±ùºÓ");
+		map.put("cost", "$:300");
+		map.put("buyid", "¹ºÂò");
+		list.add(map);
+		
+		map = new HashMap<String ,Object>();
+		map.put("storerole", R.drawable.storerole5);
+		map.put("rolename", "Ò»»Ô");
+		map.put("cost", "$:400");
+		map.put("buyid", "¹ºÂò");
+		list.add(map);
+		
+		spAdapter= new SimpleAdapter(this, list, R.layout.storeitem, new String[]{
+				"storerole", "rolename", "cost", "buyid"}, new int[] {
+				R.id.storerole, R.id.rolename, R.id.cost, R.id.buyid}) {
+			public View getView(int position, View convertView, ViewGroup parent) {
+				final int p = position;
+				final View view = super.getView(position, convertView, parent);
+				Button button=(Button) view.findViewById(R.id.buyid);
+				button.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						if(p != 0) {
+						if(Global_data.money < 100 * ( p - 1)) {
+							new AlertDialog.Builder(StoreActivity.this)
+							.setTitle("no enough coin").setMessage("½ð±Ò²»×ã")
+							.create()
+							.show();
+						} else {
+							Global_data.tempRole = p;
+							Global_data.money -= 100 * (p - 1);
+							new AlertDialog.Builder(StoreActivity.this)
+							.setTitle("OK").setMessage("¹ºÂò³É¹¦")
+							.create()
+							.show();
+						}
+						}
+					}
+				});
+				return view;
+			}
+		};
+		listView.setAdapter(spAdapter);
+		setContentView(listView);
 		
 	}
 	

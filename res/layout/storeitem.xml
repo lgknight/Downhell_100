@@ -8,8 +8,8 @@
 
         <ImageView
             android:id="@+id/storerole"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:scaleType="fitCenter" />
@@ -33,6 +33,7 @@
                 android:id="@+id/rolename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
                 android:text="rolename"
                 android:textSize="20sp" />
 
@@ -40,6 +41,8 @@
                 android:id="@+id/cost"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="8sp"
                 android:text="cost"
                 android:textSize="15sp" />
         </LinearLayout>
