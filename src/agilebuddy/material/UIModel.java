@@ -4,14 +4,8 @@ import java.util.List;
 import java.util.Random;
 
 import agilebuddy.data.*;
-import android.R.integer;
+import agilebuddy.util.Global_data;
 
-/**
-* 
-* 
-* @version 1.2.3
-* 
-*/
 public class UIModel {
 
 	/**
@@ -164,7 +158,7 @@ public class UIModel {
 	private int mFootboardSpaceCounter = 0;
 
 	// 踏板移动速度
-	private int mFootboartVelocity = -3 * GAME_ATTRIBUTE_PIXEL_DENSITY_Y;
+	private int mFootboartVelocity = -2 * Global_data.model * GAME_ATTRIBUTE_PIXEL_DENSITY_Y;
 
 	// 踏板列表
 	private LinkedList<Footboard> mFootboardList;

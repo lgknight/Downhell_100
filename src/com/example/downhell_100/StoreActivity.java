@@ -86,7 +86,7 @@ public class StoreActivity extends Activity {
 		map.put("buyid", "¹ºÂò");
 		list.add(map);
 		
-		spAdapter= new SimpleAdapter(this, list, R.layout.storeitem, new String[]{
+		spAdapter = new SimpleAdapter(this, list, R.layout.storeitem, new String[]{
 				"storerole", "rolename", "cost", "buyid"}, new int[] {
 				R.id.storerole, R.id.rolename, R.id.cost, R.id.buyid}) {
 			public View getView(int position, View convertView, ViewGroup parent) {
@@ -115,6 +115,8 @@ public class StoreActivity extends Activity {
 				return view;
 			}
 		};
+		spAdapter.notifyDataSetChanged();
+		
 		listView.setAdapter(spAdapter);
 		setContentView(listView);
 		

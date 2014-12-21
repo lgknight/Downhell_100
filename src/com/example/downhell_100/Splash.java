@@ -1,6 +1,7 @@
 package com.example.downhell_100;
 
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,9 @@ public class Splash extends Activity implements OnClickListener {
 		Button startButton = (Button) findViewById(R.id.start_game);
 		startButton.setOnClickListener(this);
 
+		Button optionButton = (Button) findViewById(R.id.options);
+		optionButton.setOnClickListener(this);
+		
 		Button storeButton = (Button) findViewById(R.id.store);
 		storeButton.setOnClickListener(this);
 		
@@ -49,6 +53,12 @@ public class Splash extends Activity implements OnClickListener {
 			break;
 		case R.id.store:
 			intent = new Intent(this, StoreActivity.class);
+			if(intent != null) {
+				startActivity(intent);
+			}
+			break;
+		case R.id.options:
+			intent = new Intent(this, OptionActivity.class);
 			if(intent != null) {
 				startActivity(intent);
 			}
